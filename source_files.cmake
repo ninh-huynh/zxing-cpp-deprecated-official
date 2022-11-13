@@ -81,6 +81,8 @@ set(LIBZXING_FILES
     core/src/zxing/common/reedsolomon/GenericGFPoly.h
     core/src/zxing/common/reedsolomon/ReedSolomonDecoder.cpp
     core/src/zxing/common/reedsolomon/ReedSolomonDecoder.h
+    core/src/zxing/common/reedsolomon/ReedSolomonEncoder.cpp
+    core/src/zxing/common/reedsolomon/ReedSolomonEncoder.h
     core/src/zxing/common/reedsolomon/ReedSolomonException.cpp
     core/src/zxing/common/reedsolomon/ReedSolomonException.h
     core/src/zxing/common/Str.cpp
@@ -107,6 +109,8 @@ set(LIBZXING_FILES
     core/src/zxing/datamatrix/Version.h
     core/src/zxing/DecodeHints.cpp
     core/src/zxing/DecodeHints.h
+    core/src/zxing/EncodeHints.cpp
+    core/src/zxing/EncodeHints.h
     core/src/zxing/Exception.cpp
     core/src/zxing/Exception.h
     core/src/zxing/FormatException.cpp
@@ -201,17 +205,34 @@ set(LIBZXING_FILES
     core/src/zxing/qrcode/detector/FinderPatternFinder.h
     core/src/zxing/qrcode/detector/FinderPatternInfo.cpp
     core/src/zxing/qrcode/detector/FinderPatternInfo.h
+    core/src/zxing/qrcode/encoder/BlockPair.cpp
+    core/src/zxing/qrcode/encoder/BlockPair.h
+    core/src/zxing/qrcode/encoder/ByteMatrix.cpp
+    core/src/zxing/qrcode/encoder/ByteMatrix.h
+    core/src/zxing/qrcode/encoder/Encoder.cpp
+    core/src/zxing/qrcode/encoder/Encoder.h
+    core/src/zxing/qrcode/encoder/MaskUtil.cpp
+    core/src/zxing/qrcode/encoder/MaskUtil.h
+    core/src/zxing/qrcode/encoder/MatrixUtil.cpp
+    core/src/zxing/qrcode/encoder/MatrixUtil.h
+    core/src/zxing/qrcode/encoder/QRCode.cpp
+    core/src/zxing/qrcode/encoder/QRCode.h
     core/src/zxing/qrcode/ErrorCorrectionLevel.cpp
     core/src/zxing/qrcode/ErrorCorrectionLevel.h
     core/src/zxing/qrcode/FormatInformation.cpp
     core/src/zxing/qrcode/FormatInformation.h
     core/src/zxing/qrcode/QRCodeReader.cpp
     core/src/zxing/qrcode/QRCodeReader.h
+    core/src/zxing/qrcode/QRCodeWriter.cpp
+    core/src/zxing/qrcode/QRCodeWriter.h
     core/src/zxing/qrcode/Version.cpp
     core/src/zxing/qrcode/Version.h
     core/src/zxing/Reader.cpp
     core/src/zxing/Reader.h
+    core/src/zxing/Writer.cpp
+    core/src/zxing/Writer.h
     core/src/zxing/ReaderException.h
+    core/src/zxing/WriterException.h
     core/src/zxing/Result.cpp
     core/src/zxing/Result.h
     core/src/zxing/ResultIO.cpp

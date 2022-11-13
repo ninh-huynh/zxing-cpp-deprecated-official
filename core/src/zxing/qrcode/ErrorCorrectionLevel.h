@@ -45,6 +45,7 @@ public:
   operator std::string const& () const;
 
   static ErrorCorrectionLevel& forBits(int bits);
+  static ErrorCorrectionLevel& fromString(std::string shortStr);
 };
 }
 }

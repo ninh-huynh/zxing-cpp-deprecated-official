@@ -38,10 +38,14 @@ private:
   static const int logBits = ZX_LOG_DIGITS(bitsPerWord);
   static const int bitsMask = (1 << logBits) - 1;
 
+  void ensureCapacity(int size);
+
 public:
   BitArray(int size);
+  BitArray();
   ~BitArray();
   int getSize() const;
+  int getSizeInBytes() const;
 
   bool get(int i) const {
     return (bits[i >> logBits] & (1 << (i & bitsMask))) != 0;
@@ -58,6 +62,13 @@ public:
   void setRange(int start, int end);
   void clear();
   bool isRange(int start, int end, bool value);
+
+  void appendBit(bool bit);
+  void appendBits(int value, int numBits);
+  void appendBitArray(Ref<BitArray> other);
+  void xor_(Ref<BitArray> other);
+  void toBytes(int bitOffset, ArrayRef<int8_t> array, int offset, int numBytes);
+
   std::vector<int>& getBitArray();
   
   void reverse();

@@ -20,6 +20,7 @@
  */
 
 #include <zxing/qrcode/ErrorCorrectionLevel.h>
+#include <zxing/common/IllegalArgumentException.h>
 
 using std::string;
 
@@ -60,6 +61,20 @@ ErrorCorrectionLevel& ErrorCorrectionLevel::forBits(int bits) {
   ErrorCorrectionLevel ErrorCorrectionLevel::H(3, 0x02, "H");
 ErrorCorrectionLevel *ErrorCorrectionLevel::FOR_BITS[] = { &M, &L, &H, &Q };
 int ErrorCorrectionLevel::N_LEVELS = 4;
+
+    ErrorCorrectionLevel &ErrorCorrectionLevel::fromString(std::string shortStr) {
+        if (shortStr == "L") {
+            return L;
+        } else if (shortStr == "M") {
+            return M;
+        } else if (shortStr == "Q") {
+            return Q;
+        } else if (shortStr == "H") {
+            return H;
+        } else {
+            throw IllegalArgumentException("Unknown ecl");
+        }
+    }
 
 }
 }

@@ -49,6 +49,8 @@ public:
   ECBlocks(int ecCodewords, ECB *ecBlocks1, ECB *ecBlocks2);
   int getECCodewords();
   std::vector<ECB*>& getECBlocks();
+  int getTotalECCodewords();
+  int getNumBlocks();
   ~ECBlocks();
 };
 

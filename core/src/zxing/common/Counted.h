@@ -19,6 +19,9 @@
  */
 
 #include <iostream>
+#include <cstring>
+#include <cstdint>
+#include <memory>
 
 namespace zxing {
 
