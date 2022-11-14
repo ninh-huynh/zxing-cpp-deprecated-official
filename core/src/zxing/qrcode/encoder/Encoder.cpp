@@ -251,7 +251,7 @@ namespace zxing {
                 // numBytes = 196
                 int numBytes = version->getTotalCodewords();
                 // getNumECBytes = 130
-                ECBlocks ecBlocks = version->getECBlocksForLevel(*ecLevel);
+                ECBlocks& ecBlocks = version->getECBlocksForLevel(*ecLevel);
                 int numEcBytes = ecBlocks.getTotalECCodewords();
                 // getNumDataBytes = 196 - 130 = 66
                 int numDataBytes = numBytes - numEcBytes;
