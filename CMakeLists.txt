@@ -100,12 +100,22 @@ target_include_directories(zxing_reader PRIVATE
         "${PROJECT_SOURCE_DIR}/cli/src"
         )
 
-install(TARGETS zxing_reader libzxing EXPORT zxing-targets
-	LIBRARY DESTINATION lib
-	RUNTIME DESTINATION bin
-	ARCHIVE DESTINATION lib
-    INCLUDES DESTINATION include
-)
+set(CLI_WRITER_SRCS
+        ./cli/src/zxing_writer_cli.cpp
+        )
+
+add_executable(zxing_writer ${CLI_WRITER_SRCS})
+target_link_libraries(zxing_writer libzxing)
+target_include_directories(zxing_writer PRIVATE
+        "${PROJECT_SOURCE_DIR}/cli/src"
+        )
+
+install(TARGETS zxing_reader zxing_writer libzxing EXPORT zxing-targets
+        LIBRARY DESTINATION lib
+        RUNTIME DESTINATION bin
+        ARCHIVE DESTINATION lib
+        INCLUDES DESTINATION include
+        )
 
 install(EXPORT zxing-targets DESTINATION lib/zxing/cmake NAMESPACE zxing::)
 
