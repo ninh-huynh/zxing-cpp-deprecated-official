@@ -1,0 +1,4 @@
+
+#define ZXing_VERSION_MAJOR @zxing_VERSION_MAJOR@
+#define ZXing_VERSION_MINOR @zxing_VERSION_MINOR@
+#define ZXing_VERSION_PATCH @zxing_VERSION_PATCH@

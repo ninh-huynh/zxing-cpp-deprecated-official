@@ -1,6 +1,9 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.10)
 
-project(zxing)
+set (CMAKE_CXX_STANDARD 11)
+set (CMAKE_CXX_EXTENSIONS OFF)
+
+project(zxing VERSION "2.3.0" LANGUAGES CXX)
 
 option(BUILD_TESTING "Enable generation of test targets" OFF)
 
@@ -31,8 +34,7 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/FindModules)
 # Suppress MSVC CRT warnings.
 if(MSVC)
     add_definitions(-D_CRT_SECURE_NO_WARNINGS)
-    add_definitions(/Za)
-    add_definitions(/MP) # multi-core builds
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP")     # multi-core builds
 endif()
 
 include(source_files.cmake)
@@ -41,7 +43,7 @@ if(WIN32)
     include_directories(core/lib/win32)
     set(CMAKE_DEBUG_POSTFIX -debug)
 else()
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+    #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 endif()
 
 # OpenCV classes
@@ -56,9 +58,15 @@ if(OpenCV_FOUND)
     include_directories(opencv/src)
 endif()
 
-include_directories(core/src)
 add_library(libzxing ${LIBZXING_FILES})
 set_target_properties(libzxing PROPERTIES PREFIX "")
+
+configure_file(ZXingVersion.h.in ZXingVersion.h)
+target_include_directories(libzxing
+        PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/core/src>"
+        PUBLIC "$<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>"
+        INTERFACE "$<INSTALL_INTERFACE:include>"
+        )
 
 find_package(Iconv)
 if(ICONV_FOUND)
@@ -79,15 +87,20 @@ if(OpenCV_FOUND)
 endif()
 
 # Add cli executable.
-file(GLOB_RECURSE ZXING_FILES
-    "./cli/src/*.cpp"
-    "./cli/src/*.h"
-)
+set(ZXING_FILES
+        ./cli/src/ImageReaderSource.cpp
+        ./cli/src/jpgd.cpp
+        ./cli/src/lodepng.cpp
+        ./cli/src/main.cpp
+        )
 
-add_executable(zxing ${ZXING_FILES})
-target_link_libraries(zxing libzxing)
+add_executable(zxing_reader ${ZXING_FILES})
+target_link_libraries(zxing_reader libzxing)
+target_include_directories(zxing_reader PRIVATE
+        "${PROJECT_SOURCE_DIR}/cli/src"
+        )
 
-install(TARGETS zxing libzxing EXPORT zxing-targets
+install(TARGETS zxing_reader libzxing EXPORT zxing-targets
 	LIBRARY DESTINATION lib
 	RUNTIME DESTINATION bin
 	ARCHIVE DESTINATION lib
