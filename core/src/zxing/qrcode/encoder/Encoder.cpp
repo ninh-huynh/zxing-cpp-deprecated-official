@@ -174,13 +174,10 @@ namespace zxing {
          */
         Mode *Encoder::chooseMode(const std::vector<char> &content, std::string encoding) {
 
-            /* Begin change: remove Kanji mode
-             * if ("Shift_JIS" == encoding) {
+            if ("Shift_JIS" == encoding) {
                 // Choose Kanji mode if all input are double-byte characters
                 return isOnlyDoubleByteKanji(content) ? &Mode::KANJI : &Mode::BYTE;
             }
-             End change
-             */
 
             boolean hasNumeric = false;
             boolean hasAlphanumeric = false;
@@ -204,14 +201,8 @@ namespace zxing {
         }
 
         bool Encoder::isOnlyDoubleByteKanji(const std::vector<char> &content) {
-            /* Begin change: disable kanji mode
-             * byte[] bytes;
-            try {
-                bytes = content.getBytes("Shift_JIS");
-            } catch (UnsupportedEncodingException ignored) {
-                return false;
-            }
-            int length = bytes.length;
+            const auto* bytes = reinterpret_cast<const int8_t *>(content.data());
+            int length = content.size();
             if (length % 2 != 0) {
                 return false;
             }
@@ -222,8 +213,6 @@ namespace zxing {
                 }
             }
             return true;
-             */
-            return false;
         }
 
         int Encoder::chooseMaskPattern(Ref<BitArray> bits,
@@ -549,16 +538,11 @@ namespace zxing {
 
         void Encoder::appendKanjiBytes(const std::vector<char> &content,
                                        Ref<BitArray> bits) {
-            /*byte[] bytes;
-            try {
-                bytes = content.getBytes("Shift_JIS");
-            } catch (UnsupportedEncodingException uee) {
-                throw new WriterException(uee);
-            }*/
+            const auto* bytes = reinterpret_cast<const int8_t *>(content.data());
             int length = content.size();
             for (int i = 0; i < length; i += 2) {
-                int byte1 = content[i] & 0xFF;
-                int byte2 = content[i + 1] & 0xFF;
+                int byte1 = bytes[i] & 0xFF;
+                int byte2 = bytes[i + 1] & 0xFF;
                 int code = (byte1 << 8) | byte2;
                 int subtracted = -1;
                 if (code >= 0x8140 && code <= 0x9ffc) {
