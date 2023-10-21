@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.10)
 set (CMAKE_CXX_STANDARD 11)
 set (CMAKE_CXX_EXTENSIONS OFF)
 
-project(zxing VERSION "2.3.0" LANGUAGES CXX)
+project(zxing VERSION "3.5.2" LANGUAGES CXX)
 
 option(BUILD_TESTING "Enable generation of test targets" OFF)
 
